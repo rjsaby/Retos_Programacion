@@ -24,7 +24,7 @@ fecha_archivo = str(fecha_actual.strftime("%Y-%m-%d"))
 
 RUTA_SHP = r"C:\docsProyectos\5.RAISS\2024.0.RAISS_Lote_4\6.Hitos\zApoyo_A_Equipos\zApoyoEquipoSIG\1.Geo_Gestion_Cambios\zShps"
 RUTA_GESTION = r"C:\docsProyectos\5.RAISS\2024.0.RAISS_Lote_4\6.Hitos\zApoyo_A_Equipos\zApoyoEquipoSIG\1.Geo_Gestion_Cambios"
-RUTA_BDCONSOLIDADA = r"C:\Users\rodian.saby\OneDrive\Documentos\docsProyectos\5.RAISS\2024.0.RAISS_Lote_4\6.Hitos\E1_Alistamiento_Diagnostico\3_Disposicion\1.BD_Consolidada\BD_Consolidada_Lote4.gdb"
+RUTA_BDCONSOLIDADA = r"C:\docsProyectos\5.RAISS\2024.0.RAISS_Lote_4\6.Hitos\E1_Alistamiento_Diagnostico\3_Disposicion\1.BD_Consolidada\BD_Consolidada_Lote4.gdb"
 # ** Se define la ruta del proyecto de PRO (extensión .aprx)
 RUTA_PROYECTO_PRO = r"C:\docsProyectos\5.RAISS\2024.0.RAISS_Lote_4\1.GIS\1.2.PRO\RAISS_Lote_4\RAISS_Lote_4.aprx"
 
@@ -82,8 +82,8 @@ df_terreno_urbano = pd.DataFrame.spatial.from_featureclass(capa_terrenos_urbanos
 
 # ** Selección de columnas
 columnas_selecciones = ['CODIGO',
-                        'CODIGO_ANTERIOR',
-                        'SHAPE']
+    'CODIGO_ANTERIOR',
+    'SHAPE']
 
 # ** DF Terrenos Rurales, Urbanos
 df_terreno_rural_reducido = df_terreno_rural[columnas_selecciones]
