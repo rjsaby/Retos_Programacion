@@ -32,13 +32,13 @@ def sql_a_dataframe(consulta_usuario:str):
         # ? Generación de Dataframe por medio de consulta en sql. Función read_sql_query.
         consulta_sql = pd.read_sql_query(consulta_usuario, conexion_sqlalq)
 
-        # ? Se construye el dataframe a partir de la lectura de la consulta (usando la función read_sql_query)
-        return pd.DataFrame(consulta_sql) 
-
         print("Conexión exitosa ...")
         
         # Cierre de la conexión
         conexion_sqlalq.close()
+
+        # ? Se construye el dataframe a partir de la lectura de la consulta (usando la función read_sql_query)
+        return pd.DataFrame(consulta_sql) 
 
     except Exception as e:
         print(f"Error durante la conexión o ejecución de la consulta: {e}")

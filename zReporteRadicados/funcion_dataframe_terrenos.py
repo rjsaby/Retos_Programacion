@@ -1,6 +1,8 @@
 from arcgis.features import GeoAccessor, GeoSeriesAccessor
 import arcpy, pandas as pd, os
 
+os.environ["CRYPTOGRAPHY_OPENSSL_NO_LEGACY"] = "yes"
+
 def dataframe_terrenos():
 
     try:

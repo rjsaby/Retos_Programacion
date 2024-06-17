@@ -2,6 +2,8 @@ import pandas as pd
 import os
 import seaborn as sns
 
+os.environ["CRYPTOGRAPHY_OPENSSL_NO_LEGACY"] = "yes"
+
 # ? Se usa para generar gráficos
 import matplotlib.pyplot as plt
 
@@ -23,15 +25,17 @@ import funcion_dataframe_terrenos
 import funcion_SQL_a_DataFrame
 import funcion_parametrizacionPredioMatriz_X_NPN
 
+arcpy.env.overwriteOutput = True
+
 # ! Asignación de Variables Globales
-DIRECTORIO_REPORTE = r"C:\docsProyectos\5.RAISS\2024.0.RAISS_Lote_4\6.Hitos\E2_Informes_Id_FisicoJuirica\2_2_0_Identificacion_Predial_Total_Ha_Actualizadas\zReportes"
-RUTA_BD_LOCAL = r"C:\docsProyectos\5.RAISS\2024.0.RAISS_Lote_4\6.Hitos\E2_Informes_Id_FisicoJuirica\2_2_0_Identificacion_Predial_Total_Ha_Actualizadas\Base_Datos\_2_2_0.gdb"
+DIRECTORIO_REPORTE = r"C:\docsProyectos\5.RAISS\2024.0.RAISS_Lote_4\6.Hitos\E2_Informes_Id_FisicoJuridica\2_2_0_Identificacion_Predial_Total_Ha_Actualizadas\zReportes"
+RUTA_BD_LOCAL = r"C:\docsProyectos\5.RAISS\2024.0.RAISS_Lote_4\6.Hitos\E2_Informes_Id_FisicoJuridica\2_2_0_Identificacion_Predial_Total_Ha_Actualizadas\Base_Datos\_2_2_0.gdb"
 RUTA_BD_CONSOLIDADA = r"C:\docsProyectos\5.RAISS\2024.0.RAISS_Lote_4\6.Hitos\E1_Alistamiento_Diagnostico\3_Disposicion\1.BD_Consolidada\BD_Consolidada_Lote4.gdb"
 NOMBRE_CAPA_HAXESTADO = 'TERRENOS_RECONOCIMIENTO_TRAMITES_ATENCION_SHEET'
 
 def calculo_rendimientos_indicadorSheet(nMunicipio, nSheet, idSheet):
-    nombre_reporte_hasheet = 'Reporte_Ha_FuenteSheet' + str(nMunicipio) + '.xlsx'
-    nombre_capa_haXEstado = 'TERRENOS_RECONOCIMIENTO_TRAMITES_ATENCION_SHEET_' + str(nMunicipio)
+    nombre_reporte_hasheet = 'Reporte_Ha_FuenteSheet_' + str(nMunicipio) + '.xlsx'
+    nombre_capa_haXEstado = 'TERRENOS_VISITADOS_' + str(nMunicipio)
 
     # ! Migración de Sheet
     sheet_name = nSheet
@@ -50,6 +54,28 @@ def calculo_rendimientos_indicadorSheet(nMunicipio, nSheet, idSheet):
         'PROGRAMACION',
         'Visitado',
         'Nº Radicado BCGS']
+    
+    dict_campos_npn_matriz = {'npn_matriz':str,
+                              'informalidades_visitadas':int,
+                              'CODIGO':str,
+                              'CODIGO_ANTERIOR':str,
+                              'Area_ha_cmt12':float
+                              }
+    
+    dict_campos_conGeo = {'MUNICIPIO':str,
+                         'ZONA':str,
+                         'CODIGO':str,
+                         'Area terreno_Ha':str,
+                         'CODIGO_MUN':str,
+                         'COORDINADOR':str,
+                         'RECONOCEDOR':str,
+                         'PROGRAMACION':str,
+                         'Visitado':str,
+                         'Nº Radicado BCGS':str,
+                         'CODIGO_ANTERIOR':str,
+                         'Area_ha_cmt12':float
+                         }
+
 
     df_reporte_reconocimiento = df_reporte_reconocimiento[columnas_seleccion]
 
@@ -109,16 +135,23 @@ def calculo_rendimientos_indicadorSheet(nMunicipio, nSheet, idSheet):
 
     # ! Generación Capas Espaciales
     reporteReconocimiento_sinGeo_conMatriz_Unicos_Geo = reporteReconocimiento_sinGeo_conMatriz_Unicos_Geo.copy()
+    reporteReconocimiento_sinGeo_conMatriz_Unicos_Geo = reporteReconocimiento_sinGeo_conMatriz_Unicos_Geo.astype(dict_campos_npn_matriz)
+
     df_terrenos_reporteReconocimiento_conGeo = df_terrenos_reporteReconocimiento_conGeo.copy()
+    df_terrenos_reporteReconocimiento_conGeo = df_terrenos_reporteReconocimiento_conGeo.astype(dict_campos_conGeo)
+    df_terrenos_reporteReconocimiento_conGeo = df_terrenos_reporteReconocimiento_conGeo.rename(columns={'Nº Radicado BCGS':'Num_Radicado_BCGS'})
 
     # **** BD CONSOLIDADA  ****
     # TODO: Informalidades
-    # ** Exportación a BD Consolidada
-    NOMBRE_CAPA_SALIDA = f"Analitica_UT_Consolidada\\{str(nombre_capa_haXEstado) + '_INFORMAL'.upper()}"
-    ruta_salida_terrenos_reconocimiento_matrices = os.path.join(RUTA_BD_CONSOLIDADA, NOMBRE_CAPA_SALIDA)
+    # ** Exportación a BD Consolidada`
+    if reporteReconocimiento_sinGeo_conMatriz_Unicos_Geo.shape[0] != 0:
+        NOMBRE_CAPA_SALIDA = f"Analitica_UT_Consolidada\\{str(nombre_capa_haXEstado) + '_INFORMAL'.upper()}"
+        ruta_salida_terrenos_reconocimiento_matrices = os.path.join(RUTA_BD_CONSOLIDADA, NOMBRE_CAPA_SALIDA)
 
-    reporteReconocimiento_sinGeo_conMatriz_Unicos_Geo.spatial.to_featureclass(location=ruta_salida_terrenos_reconocimiento_matrices)
-    print(f"Se exporta la capa {NOMBRE_CAPA_SALIDA} a BD Consolidada")
+        reporteReconocimiento_sinGeo_conMatriz_Unicos_Geo.spatial.to_featureclass(location=ruta_salida_terrenos_reconocimiento_matrices)
+        print(f"Se exporta la capa {NOMBRE_CAPA_SALIDA} a BD Consolidada")
+    else:
+        print("No se exporta por no tener registros")
 
     # TODO: Formales
     # ** Exportación a BD Consolidada
@@ -130,20 +163,23 @@ def calculo_rendimientos_indicadorSheet(nMunicipio, nSheet, idSheet):
 
     # **** BD LOCAL  ****
     # TODO: Informalidades
-    # ** Exportación a BD Consolidada
-    NOMBRE_CAPA_SALIDA = f"{str(nombre_capa_haXEstado) + '_INFORMAL'.upper()}"
-    ruta_salida_terrenos_reconocimiento_matrices = os.path.join(RUTA_BD_LOCAL, NOMBRE_CAPA_SALIDA)
+    # ** Exportación a Local
+    if reporteReconocimiento_sinGeo_conMatriz_Unicos_Geo.shape[0] != 0:
+        NOMBRE_CAPA_SALIDA = f"{str(nombre_capa_haXEstado) + '_INFORMAL'.upper()}"
+        ruta_salida_terrenos_reconocimiento_matrices = os.path.join(RUTA_BD_LOCAL, NOMBRE_CAPA_SALIDA)
 
-    reporteReconocimiento_sinGeo_conMatriz_Unicos_Geo.spatial.to_featureclass(location=ruta_salida_terrenos_reconocimiento_matrices)
-    print(f"Se exporta la capa {NOMBRE_CAPA_SALIDA} a BD Consolidada")
+        reporteReconocimiento_sinGeo_conMatriz_Unicos_Geo.spatial.to_featureclass(location=ruta_salida_terrenos_reconocimiento_matrices)
+        print(f"Se exporta la capa {NOMBRE_CAPA_SALIDA} a Local")
+    else:
+        print("No se exporta por no tener registros")
 
     # TODO: Formales
-    # ** Exportación a BD Consolidada
+    # ** Exportación a Local
     NOMBRE_CAPA_SALIDA = f"{str(nombre_capa_haXEstado) + '_FORMAL'.upper()}"
     ruta_salida_terrenos_reconocimiento_formales = os.path.join(RUTA_BD_LOCAL, NOMBRE_CAPA_SALIDA)
 
     df_terrenos_reporteReconocimiento_conGeo.spatial.to_featureclass(location=ruta_salida_terrenos_reconocimiento_formales)
-    print(f"Se exporta la capa {NOMBRE_CAPA_SALIDA} a BD Consolidada")
+    print(f"Se exporta la capa {NOMBRE_CAPA_SALIDA} a Local")
 
     # ! Reporte Alfanumérico
     df_resumen_ha.to_excel(os.path.join(DIRECTORIO_REPORTE, nombre_reporte_hasheet))
