@@ -109,6 +109,7 @@ def calculo_rendimientos_indicadorSheet(nMunicipio, nSheet, idSheet):
 
     # ! Filtro de Visitados
     df_reporte_reconocimiento = df_reporte_reconocimiento[(df_reporte_reconocimiento['Visitado'] == 'SI')]
+    print(f"El total de terrenos visitados es: {df_reporte_reconocimiento.shape[0]}")
 
     # ! Ejecución de función, espacialización de Terrenos
     df_terrenos, ruta_terrenos = funcion_dataframe_terrenos.dataframe_terrenos()

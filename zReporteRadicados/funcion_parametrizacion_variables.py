@@ -185,6 +185,7 @@ def parametrizacion_variables():
         ,'aida.belalcazar':'SIG'
         ,'albeiro.marulanda':'Reconocedor'
         ,'alvaro.donado':'Reconocedor'
+        ,'amed.blandon':'SIG'
         ,'andres.ramos':'SIG'
         ,'angel.banquez':'Reconocedor'
         ,'camilo.moreno':'SIG'
@@ -221,4 +222,10 @@ def parametrizacion_variables():
         ,'yesmy.batista':'Reconocedor'
         }
     
-    return consulta_tRadicados, consuta_tFinalizados, consulta_tRendimientosActualizacion, consulta_fechas, renombrar_actividades, dict_coordinador_reconocedor
+    consulta_radicado_hijo = """
+        select distinct radicado_padre
+            ,radicado
+        from bpmcat.v_rdcd_pdr_hijo_actualizacion
+    """
+    
+    return consulta_tRadicados, consuta_tFinalizados, consulta_tRendimientosActualizacion, consulta_fechas, renombrar_actividades, dict_coordinador_reconocedor, consulta_radicado_hijo

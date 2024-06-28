@@ -30,7 +30,6 @@ def xlsx_avance_edicion_gis():
     fecha_actual = dt.now()
     fecha_estandarizada = str(fecha_actual.strftime("%Y%m%d"))
 
-
     XLSX_ESTADISTICOS = r"C:\docsProyectos\5.RAISS\2024.0.RAISS_Lote_4\6.Hitos\O_Apoyo_Construccion_UIntervencion\UI_Finales\Estadisticos\indicadores_base_ui_lote_4.xlsx"
 
     DIRECTORIO_XLSX = r"C:\docsProyectos\5.RAISS\2024.0.RAISS_Lote_4\6.Hitos\E2_Informes_Id_FisicoJuridica\2_2_6_Indicador_Edicion_Geografica\zReportes\Seguimiento_Diario"
@@ -54,8 +53,13 @@ def xlsx_avance_edicion_gis():
 
     nSheet_estadisticoXHito = 'Area_Editada_X_Hito'
 
-    df_estadisticos = pd.read_excel(XLSX_ESTADISTICOS, sheet_name="hitos_por_asignacion")
-    df_estadisticos = df_estadisticos[columnas_estadisticos].rename(columns={'Area_Ha_CMT12':'Area_Ha_CTM12'})
+    # ** Copia a Google Drive
+    DIRECTORIO_DESTINO = r"G:\Mi unidad\Equipo_Consolidacion\Hitos\E2_Informes_Id_FisicoJuridica\2_2_6_Indicador_Edicion_Geografica\zReportes\Seguimiento_Diario"
+    NOMBRE_ARCHIVO_DESTINO = fecha_estandarizada+'_avance_edicios_GIS.xlsx'
+    ruta_destino = os.path.join(DIRECTORIO_DESTINO, NOMBRE_ARCHIVO_DESTINO)
+
+    df_estadisticos = pd.read_excel(XLSX_ESTADISTICOS, sheet_name="hitos_por_asignacion.xlsx")
+    # df_estadisticos = df_estadisticos[columnas_estadisticos].rename(columns={'Area_Ha_CMT12':'Area_Ha_CTM12'})
 
     dataframe = {}
 
@@ -83,3 +87,6 @@ def xlsx_avance_edicion_gis():
 
     df_estadisticos_ordenados.to_excel(RUTA_XLSX, sheet_name='Avance_SIG')
     print(f"Se genera XLSX {ARCHIVO_XLSX}")
+
+    shutil.copy(RUTA_XLSX, ruta_destino)
+    print(f"Se copia a Google Drive")
