@@ -227,5 +227,12 @@ def parametrizacion_variables():
             ,radicado
         from bpmcat.v_rdcd_pdr_hijo_actualizacion
     """
+
+    consulta_nro_ficha = """
+        select distinct radicado
+	        ,nro_ficha 
+        from bpmcat.vw_rpt_tramites_en_proceso;
+
+    """
     
-    return consulta_tRadicados, consuta_tFinalizados, consulta_tRendimientosActualizacion, consulta_fechas, renombrar_actividades, dict_coordinador_reconocedor, consulta_radicado_hijo
+    return consulta_tRadicados, consuta_tFinalizados, consulta_tRendimientosActualizacion, consulta_fechas, renombrar_actividades, dict_coordinador_reconocedor, consulta_radicado_hijo, consulta_nro_ficha
