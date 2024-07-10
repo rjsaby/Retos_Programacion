@@ -203,6 +203,7 @@ def parametrizacion_variables():
         ,'jair.benedetty':'Coordinador'
         ,'jarod.macareno':'Reconocedor'
         ,'jorge.avendano':'Calidad'
+        ,'jorge.hernandez':'Reconocedor'
         ,'juan.herreraa':'SIG'
         ,'juan.otero':'SIG'
         ,'julie.castano':'Jurídico'
@@ -210,14 +211,18 @@ def parametrizacion_variables():
         ,'kevin.castro':'Coordinador'
         ,'liney.arroyo':'Coordinador'
         ,'luis.jimenez':'Reconocedor'
+        ,'maria.hernandez':'Reconocedor'
         ,'maria.montaña':'Calidad'
         ,'mary.conquett':'Reconocedor'
         ,'melany.delahoz':'Jurídico'
+        ,'monica.penuela':'Reconocedor'
+        ,'nadith.miranda':'Reconocedor'
         ,'pedro.garcia':'Reconocedor'
         ,'rafael.molina':'Reconocedor'
         ,'ricardo.guerrero':'Reconocedor'
         ,'samith.saenz':'Reconocedor'
         ,'soporte4':'Reconocedor'
+        ,'stefany.dominguez':'Reconocedor'
         ,'william.perez':'Reconocedor'
         ,'yesmy.batista':'Reconocedor'
         }
@@ -232,7 +237,14 @@ def parametrizacion_variables():
         select distinct radicado
 	        ,nro_ficha 
         from bpmcat.vw_rpt_tramites_en_proceso;
-
     """
     
-    return consulta_tRadicados, consuta_tFinalizados, consulta_tRendimientosActualizacion, consulta_fechas, renombrar_actividades, dict_coordinador_reconocedor, consulta_radicado_hijo, consulta_nro_ficha
+    nombre_procesos = ['Complementación - Nomenclatura, Matrícula y Propietario',
+        'Mutaciones de Primera Clase',
+        'Mutaciones de Segunda Clase',
+        'Mutaciones de Tercera Clase',
+        'Mutaciones de Cuarta Clase',
+        'Mutaciones de Quinta Clase',        
+        'Rectificación de Cabida y Linderos 1101']
+
+    return consulta_tRadicados, consuta_tFinalizados, consulta_tRendimientosActualizacion, consulta_fechas, renombrar_actividades, dict_coordinador_reconocedor, consulta_radicado_hijo, consulta_nro_ficha, nombre_procesos
