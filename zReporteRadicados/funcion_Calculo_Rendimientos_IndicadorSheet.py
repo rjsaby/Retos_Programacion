@@ -13,7 +13,7 @@ from datetime import datetime
 # ? Conexión a BD Postgres. Se usa dado que pandas no acepta sino este paquete para la conexión.
 from sqlalchemy import create_engine, text
 
-from datetime import datetime
+from datetime import datetime as dt
 
 from arcgis.features import GeoAccessor, GeoSeriesAccessor
 import arcpy
@@ -28,13 +28,17 @@ import funcion_parametrizacionPredioMatriz_X_NPN
 arcpy.env.overwriteOutput = True
 
 # ! Asignación de Variables Globales
-DIRECTORIO_REPORTE = r"C:\docsProyectos\5.RAISS\2024.0.RAISS_Lote_4\6.Hitos\E2_Informes_Id_FisicoJuridica\2_2_0_Identificacion_Predial_Total_Ha_Actualizadas\zReportes"
+DIRECTORIO_REPORTE = r"C:\docsProyectos\5.RAISS\2024.0.RAISS_Lote_4\6.Hitos\E2_Informes_Id_FisicoJuridica\2_2_7_Identificacion_Predial_Total_Ha_Visitadas\zReportes"
 RUTA_BD_LOCAL = r"C:\docsProyectos\5.RAISS\2024.0.RAISS_Lote_4\6.Hitos\E2_Informes_Id_FisicoJuridica\2_2_0_Identificacion_Predial_Total_Ha_Actualizadas\Base_Datos\_2_2_0.gdb"
 RUTA_BD_CONSOLIDADA = r"C:\docsProyectos\5.RAISS\2024.0.RAISS_Lote_4\6.Hitos\E1_Alistamiento_Diagnostico\3_Disposicion\1.BD_Consolidada\BD_Consolidada_Lote4.gdb"
 NOMBRE_CAPA_HAXESTADO = 'TERRENOS_RECONOCIMIENTO_TRAMITES_ATENCION_SHEET'
 
 def calculo_rendimientos_indicadorSheet(nMunicipio, nSheet, idSheet):
-    nombre_reporte_hasheet = 'Reporte_Ha_FuenteSheet_' + str(nMunicipio) + '.xlsx'
+
+    fecha_actual = dt.now()
+    fecha_directorio = str(fecha_actual.strftime("%Y%m%d"))
+
+    nombre_reporte_hasheet = fecha_directorio + '_Reporte_Ha_FuenteSheet_' + str(nMunicipio) + '.xlsx'
     nombre_capa_haXEstado = 'TERRENOS_VISITADOS_' + str(nMunicipio)
 
     # ! Migración de Sheet
@@ -56,49 +60,49 @@ def calculo_rendimientos_indicadorSheet(nMunicipio, nSheet, idSheet):
         'Nº Radicado BCGS']
     
     dict_campos_npn_matriz = {'npn_matriz':str,
-                              'informalidades_visitadas':int,
-                              'codigo':str,
-                              'codigo_anterior':str,
-                              'area_ha_cmt12':float
-                              }
+        'informalidades_visitadas':int,
+        'codigo':str,
+        'codigo_anterior':str,
+        'area_ha_cmt12':float
+        }
     
     dict_campos_conGeo = {'MUNICIPIO':str,
-                         'ZONA':str,
-                         'CODIGO':str,
-                         'Area terreno_Ha':str,
-                         'CODIGO_MUN':str,
-                         'COORDINADOR':str,
-                         'RECONOCEDOR':str,
-                         'PROGRAMACION':str,
-                         'Visitado':str,
-                         'Nº Radicado BCGS':str,
-                         'codigo_anterior':str,
-                         'area_ha_cmt12':float
-                         }
+        'ZONA':str,
+        'CODIGO':str,
+        'Area terreno_Ha':str,
+        'CODIGO_MUN':str,
+        'COORDINADOR':str,
+        'RECONOCEDOR':str,
+        'PROGRAMACION':str,
+        'Visitado':str,
+        'Nº Radicado BCGS':str,
+        'codigo_anterior':str,
+        'area_ha_cmt12':float
+        }
 
     columnas_salida_conGeo = ['MUNICIPIO',
-                              'ZONA',
-                              'CODIGO',
-                              'Area terreno_Ha',
-                              'CODIGO_MUN',
-                              'COORDINADOR',
-                              'RECONOCEDOR',
-                              'PROGRAMACION',
-                              'Visitado',
-                              'Nº Radicado BCGS',
-                              'codigo_anterior',
-                              'area_ha_cmt12',
-                              'SHAPE'
-                              ]
+        'ZONA',
+        'CODIGO',
+        'Area terreno_Ha',
+        'CODIGO_MUN',
+        'COORDINADOR',
+        'RECONOCEDOR',
+        'PROGRAMACION',
+        'Visitado',
+        'Nº Radicado BCGS',
+        'codigo_anterior',
+        'area_ha_cmt12',
+        'SHAPE'
+        ]
     
     
     columnas_salida_sinGeo = ['npn_matriz',
-                              'informalidades_visitadas',
-                              'codigo',
-                              'codigo_anterior',
-                              'area_ha_cmt12',
-                              'SHAPE',
-                              ]
+        'informalidades_visitadas',
+        'codigo',
+        'codigo_anterior',
+        'area_ha_cmt12',
+        'SHAPE',
+        ]
 
     df_reporte_reconocimiento = df_reporte_reconocimiento[columnas_seleccion]
 
@@ -167,7 +171,7 @@ def calculo_rendimientos_indicadorSheet(nMunicipio, nSheet, idSheet):
     df_terrenos_reporteReconocimiento_conGeo = df_terrenos_reporteReconocimiento_conGeo[columnas_salida_conGeo]
 
     df_resumen_ha = pd.DataFrame([[nMunicipio, terrenos_posiblesInformalidades, predios_matrices, total_ha_matrices, terrenos_formales, total_ha_conGeo]], columns=['municipio', 'posibles_informalidades', 'terrenos_matrices', 'total_ha_posiblesinformalidades','predios_formales', 'total_ha_prediosformales'])
-    df_resumen_ha['total_ha'] = df_resumen_ha['total_ha_posiblesinformalidades'] + df_resumen_ha['total_ha_prediosformales']
+    #df_resumen_ha['total_ha'] = df_resumen_ha['total_ha_posiblesinformalidades'] + df_resumen_ha['total_ha_prediosformales']
 
     # ! Generación Capas Espaciales
     reporteReconocimiento_sinGeo_conMatriz_Unicos_Geo = reporteReconocimiento_sinGeo_conMatriz_Unicos_Geo.copy()

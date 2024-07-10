@@ -33,8 +33,7 @@ def edicion_sig_municipio(sheet_name, sheet_id, municipio):
     columnas_seleccion = ['Codigo terreno','Editor SIG','Ajuste Geografico']
     columnas_seleccion_ui = ['codigo','id_ui','Meta_Hito']
     columnas_filtrado_cambio_ui = ['Codigo terreno','Editor SIG','Ajuste Geografico','area_ha_cmt12','id_ui','Meta_Hito']
-    # columnas_estadisticos = ['Hito','Area_Ha_CMT12','Area_Ha_Contractual']
-    columnas_parametrizacion = ['Codigo terreno','Editor SIG','Ajuste Geografico','codigo','codigo_anterior','area_ha_cmt12','SHAPE']
+    columnas_estadisticos = ['Hito','Area_Ha_CMT12','Area_Ha_Contractual']
 
     ruta_relacion_terreno_ui = r"C:\docsProyectos\5.RAISS\2024.0.RAISS_Lote_4\6.Hitos\E1_Alistamiento_Diagnostico\3_Disposicion\1.BD_Consolidada\BD_Consolidada_Lote4.gdb\relacion_terreno_ui"
     ui = r"C:\docsProyectos\5.RAISS\2024.0.RAISS_Lote_4\6.Hitos\O_Apoyo_Construccion_UIntervencion\UI_Finales\UI_Finales.gdb\UI_Unificadas\UI_Unificadas"
@@ -65,8 +64,6 @@ def edicion_sig_municipio(sheet_name, sheet_id, municipio):
     right_on="codigo", how="left")
 
     print(f"Registros NO espacializados: {(df_cambios_terrenos[df_cambios_terrenos['SHAPE'].isnull()]).shape[0]}")
-
-    df_cambios_terrenos = df_cambios_terrenos[columnas_parametrizacion]
 
     df_cambios_terrenos.spatial.to_featureclass(location=ruta_fc_estadistico)
     print(f"Se genera FC asociado a terrenos editados, para el municipio {municipio}")

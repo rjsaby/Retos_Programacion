@@ -1,7 +1,7 @@
 import os, arcpy
 from datetime import datetime as dt
 
-def exportacion_salida_grafica(nLayout, rutaPDF):
+def exportacion_salida_grafica(nLayout):
     # TODO: Parametrización de Variables
 
     # ? Configuración del acceso al proyecto PRO.
@@ -15,13 +15,13 @@ def exportacion_salida_grafica(nLayout, rutaPDF):
     # ** Se accede por código al proyecto .aprx del proyecto, se crea un objeto de tipo proyecto
     proyecto = arcpy.mp.ArcGISProject(arcpy.env.workspace)
 
-    # ** Ruta de exportación del PDF
-    ruta_pdf = rutaPDF
+    # ** Ruta de exportación del JPEG
+    ruta_jpeg = r"C:\docsProyectos\5.RAISS\2024.0.RAISS_Lote_4\6.Hitos\E2_Informes_Id_FisicoJuridica\2_2_6_Indicador_Edicion_Geografica\Salidas_Graficas"
 
     fecha = dt.now()
-    fecha_pdf = str(fecha.strftime("%Y%m%d"))
+    fecha_jpeg = str(fecha.strftime("%Y%m%d"))
 
-    ruta_salida_pdf = os.path.join(ruta_pdf, fecha_pdf)
+    ruta_salida_jpeg = os.path.join(ruta_jpeg, fecha_jpeg)
 
     resolution = 300
     page_range_type = 'ALL'
@@ -37,7 +37,7 @@ def exportacion_salida_grafica(nLayout, rutaPDF):
                 if mapSerie.enabled:
                     print(f'Nombre Layout: {i.name}')
                     mapSerie.refresh()
-                    mapSerie.exportToPDF(ruta_salida_pdf, 
+                    mapSerie.exportToPDF(ruta_salida_jpeg, 
                                         resolution = resolution,
                                         page_range_type = page_range_type,
                                         multiple_files = multiple_files,

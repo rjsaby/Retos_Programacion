@@ -171,7 +171,7 @@ def parametrizacion_variables():
     renombrar_actividades = {'Consolidando información':'4.Consolidando información'
                         ,'Incorporando predios a la versión':'1.Incorporando predios a la versión'
                         ,'Realizando visita de campo':'3.Realizando visita de campo'
-                        ,'Revisando Información Reconocimiento  Inicial':'5.Revisando Información Reconocimiento  Inicial'
+                        ,'Revisando Información Reconocimiento  Inicial':'5.Revisando Información Reconocimiento Inicial'
                         ,'Realizando Análisis Catastro Registro':'2.Realizando Análisis Catastro Registro'
                         ,'Preparando Edición Geográfica':'6.Preparando Edición Geográfica'
                         ,'Realizando Edición Geográfica':'7.Realizando Edición Geográfica'
