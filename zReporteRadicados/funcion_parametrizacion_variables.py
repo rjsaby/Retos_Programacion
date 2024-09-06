@@ -12,10 +12,7 @@ def parametrizacion_variables():
             ,radicados.actividad
             ,radicados.vr_estado_paso
             ,radicados.proceso_estado
-<<<<<<< HEAD
             ,radicados.usuario_radico
-=======
->>>>>>> 1de0162e9ad4e7a9df62aadbca46c2194b3914e9
             ,radicados.fecha_radicado
             ,radicados.usuario
             ,radicados.vr_proces_des
@@ -47,10 +44,7 @@ def parametrizacion_variables():
                 ,t2.nb_step_idn
                 ,cast(t2.dt_adt_fchupd as date) dt_adt_fchupd
                 ,t2.vr_proegn_ori
-<<<<<<< HEAD
                 ,t1.usuario_radico
-=======
->>>>>>> 1de0162e9ad4e7a9df62aadbca46c2194b3914e9
                 ,cast(t1.fecha_radicado as date) fecha_radicado
                 ,t1.usuario
                 ,cast(t2.dt_adt_fchupd as date) fecha_actualizacion_tramite
@@ -120,7 +114,6 @@ def parametrizacion_variables():
         """
     
     consulta_tRendimientosActualizacion = """
-<<<<<<< HEAD
     select distinct consulta_1.radicado 
             ,consulta_1.usuario_responsable_actividad_anterior
             ,consulta_1.actividad_actual_tramite
@@ -142,8 +135,6 @@ def parametrizacion_variables():
     from 
     (
     --
-=======
->>>>>>> 1de0162e9ad4e7a9df62aadbca46c2194b3914e9
         select distinct t2.radicado 
             ,t2.usuario_responsable_actividad_anterior
             ,t2.actividad_actual_tramite
@@ -152,35 +143,25 @@ def parametrizacion_variables():
             ,t2.usuario_inserta_plano
             ,t2.npn
             ,t2.municipio
-<<<<<<< HEAD
             ,t2.ficha
             ,t2.pversion
-=======
->>>>>>> 1de0162e9ad4e7a9df62aadbca46c2194b3914e9
             ,(case when t2.actividad_actual_tramite in ('Consolidando información'
                                                         ,'Incorporando predios a la versión'
                                                         ,'Realizando visita de campo'
                                                         ,'Revisando Información Reconocimiento  Inicial'
                                                         ,'Revisando Información'
-<<<<<<< HEAD
                                                         ,'Realizando Transacción Catastral'
                                                         ,'Revisando Información'
                                                         ,'Revisando Información Final Reconocimiento') then 'Reconocimiento'
-=======
-                                                        ,'Realizando Transacción Catastral') then 'Reconocimiento'
->>>>>>> 1de0162e9ad4e7a9df62aadbca46c2194b3914e9
                 when t2.actividad_actual_tramite in ('Realizando Análisis Catastro Registro') then 'Jurídica'
                 when t2.actividad_actual_tramite in ('Preparando Edición Geográfica'
                                                     ,'Realizando Edición Geográfica'
                                                     ,'Revisando Información Geográfica') then 'SIG'
-<<<<<<< HEAD
                 when t2.actividad_actual_tramite in ('Revisando Información Calidad'
                                                     ,'Revisando Información Terreno'
                                                     ,'Realizando Revisión Informe de Aseguramiento'
                                                     ,'Aprobando y consolidacion XTF'                                                    
                                                     ,'Realizando Entrega de Productos Finales') then 'Calidad'
-=======
->>>>>>> 1de0162e9ad4e7a9df62aadbca46c2194b3914e9
                 else 'Sin parametrización'
                 end) componente_responsable
             ,(case when actividad_actual_tramite in ('Consolidando información'
@@ -191,7 +172,6 @@ def parametrizacion_variables():
                                                     ,'Preparando Edición Geográfica'
                                                     ,'Realizando Edición Geográfica'
                                                     ,'Revisando Información Geográfica') then 'Fase Previa a la Transacción Catastral'
-<<<<<<< HEAD
                     when actividad_actual_tramite in ('Realizando Transacción Catastral'
                                                     ,'Revisando Información'
                                                     ,'Revisando Información Calidad'
@@ -418,10 +398,6 @@ def parametrizacion_variables():
                                                     ,'Realizando Revisión Informe de Aseguramiento'
                                                     ,'Aprobando y consolidacion XTF'                                                    
                                                     ,'Realizando Entrega de Productos Finales') then 'En Transacción Catastral o Posterior'
-=======
-                    when actividad_actual_tramite in ('Realizando Transacción Catastral',
-                                                    'Revisando Información') then 'En Transacción Catastral o Posterior'
->>>>>>> 1de0162e9ad4e7a9df62aadbca46c2194b3914e9
                 else 'Sin parametrización'
                 end) fase_actividad
                 
@@ -434,20 +410,14 @@ def parametrizacion_variables():
         ,t1.plano_cartografico con_plano_cartografico
         ,t1.user_inserta_plano usuario_inserta_plano
         ,t1.npn 
-<<<<<<< HEAD
         ,t1.municipio
         ,t1.ficha
         ,t1.pversion 
         from bpmcat.vw_trmdevuelto_rad_npn_plano t1
-=======
-        ,t1.municipio 
-        from bpmcat.vw_trmactivos_rad_npn_plano t1
->>>>>>> 1de0162e9ad4e7a9df62aadbca46c2194b3914e9
         where nom_tramite = 'Formación y Actualización'
         ) t2;
         """
     
-<<<<<<< HEAD
     consulta_informalidades = """
         select distinct t1.numero_predial_formal
             ,t1.numero_predial_informal
@@ -570,93 +540,3 @@ def parametrizacion_variables():
     """
 
     return consulta_tRadicados, consuta_tFinalizados, consulta_tRendimientosActualizacion, consulta_fechas, renombrar_actividades, dict_coordinador_reconocedor, consulta_radicado_hijo, consulta_nro_ficha, nombre_procesos, consulta_interesado_sexo, consulta_sexo_npn, consulta_tRendimientosDevueltosActualizacion, consulta_informalidades, dict_area_municipio, consulta_interesados, dict_capa_version, consulta_creadorRadicado, consulta_predio_interesado_derecho #[17]
-=======
-    consulta_fechas = """ 
-        select distinct t1.radicado
-            ,cast(t1.fecha_radicado as date) fecha_radicado
-            ,cast(t2.dt_adt_fchupd as date) fecha_actualizacion_tramite
-        from bpmcat.vw_rpt_tramites_en_proceso t1 
-        left join bpmcat.tb_bpm_egn_proegn t2 on t1.radicado = t2.vr_proegn_rad;
-        """
-    
-    renombrar_actividades = {'Consolidando información':'4.Consolidando información'
-                        ,'Incorporando predios a la versión':'1.Incorporando predios a la versión'
-                        ,'Realizando visita de campo':'3.Realizando visita de campo'
-                        ,'Revisando Información Reconocimiento  Inicial':'5.Revisando Información Reconocimiento Inicial'
-                        ,'Realizando Análisis Catastro Registro':'2.Realizando Análisis Catastro Registro'
-                        ,'Preparando Edición Geográfica':'6.Preparando Edición Geográfica'
-                        ,'Realizando Edición Geográfica':'7.Realizando Edición Geográfica'
-                        ,'Revisando Información Geográfica':'8.Revisando Información Geográfica'
-                        ,'Realizando Transacción Catastral':'9.Realizando Transacción Catastral'
-                        ,'Revisando Información Calidad':'10.Revisando Información Calidad'
-                        }
-    
-    dict_coordinador_reconocedor = {
-        'abel.maldonado':'Reconocedor'
-        ,'aida.belalcazar':'SIG'
-        ,'albeiro.marulanda':'Reconocedor'
-        ,'alvaro.donado':'Reconocedor'
-        ,'amed.blandon':'SIG'
-        ,'andres.ramos':'SIG'
-        ,'angel.banquez':'Reconocedor'
-        ,'camilo.moreno':'SIG'
-        ,'celci.quintana':'Reconocedor'
-        ,'diana.pineda':'SIG'
-        ,'emilio.castillo':'Reconocedor'
-        ,'euclides.polo':'Reconocedor'
-        ,'fabian.arango':'Reconocedor'
-        ,'fabio.barragan':'Reconocedor'
-        ,'francisco.galarcio':'Reconocedor'
-        ,'german.panizza':'Reconocedor'
-        ,'harlingto.padilla':'Reconocedor'
-        ,'hernando.sarmiento':'Reconocedor'
-        ,'jacqueline.jimenez':'Coordinador'
-        ,'jair.benedetty':'Coordinador'
-        ,'jarod.macareno':'Reconocedor'
-        ,'jorge.avendano':'Calidad'
-        ,'jorge.hernandez':'Reconocedor'
-        ,'juan.herreraa':'SIG'
-        ,'juan.otero':'SIG'
-        ,'julie.castano':'Jurídico'
-        ,'karen.escobar':'Reconocedor'
-        ,'kevin.castro':'Coordinador'
-        ,'liney.arroyo':'Coordinador'
-        ,'luis.jimenez':'Reconocedor'
-        ,'maria.hernandez':'Reconocedor'
-        ,'maria.montaña':'Calidad'
-        ,'mary.conquett':'Reconocedor'
-        ,'melany.delahoz':'Jurídico'
-        ,'monica.penuela':'Reconocedor'
-        ,'nadith.miranda':'Reconocedor'
-        ,'pedro.garcia':'Reconocedor'
-        ,'rafael.molina':'Reconocedor'
-        ,'ricardo.guerrero':'Reconocedor'
-        ,'samith.saenz':'Reconocedor'
-        ,'soporte4':'Reconocedor'
-        ,'stefany.dominguez':'Reconocedor'
-        ,'william.perez':'Reconocedor'
-        ,'yesmy.batista':'Reconocedor'
-        }
-    
-    consulta_radicado_hijo = """
-        select distinct radicado_padre
-            ,radicado
-        from bpmcat.v_rdcd_pdr_hijo_actualizacion
-    """
-
-    consulta_nro_ficha = """
-        select distinct radicado
-	        ,nro_ficha 
-        from bpmcat.vw_rpt_tramites_en_proceso;
-    """
-    
-    nombre_procesos = ['Complementación - Nomenclatura, Matrícula y Propietario',
-        'Mutaciones de Primera Clase',
-        'Mutaciones de Segunda Clase',
-        'Mutaciones de Tercera Clase',
-        'Mutaciones de Cuarta Clase',
-        'Mutaciones de Quinta Clase',        
-        'Rectificación de Cabida y Linderos 1101']
-
-    return consulta_tRadicados, consuta_tFinalizados, consulta_tRendimientosActualizacion, consulta_fechas, renombrar_actividades, dict_coordinador_reconocedor, consulta_radicado_hijo, consulta_nro_ficha, nombre_procesos
->>>>>>> 1de0162e9ad4e7a9df62aadbca46c2194b3914e9

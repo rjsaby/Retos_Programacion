@@ -39,13 +39,9 @@ def funcion_terreno_w_ui(ruta_fcTerrenos, ruta_gdbScrach, rutafcUI):
     'Nombre_UI',
     'Codigo_DANE_UI',
     'Area_Ha_CMT12',
-<<<<<<< HEAD
     'Meta_Hito',
     'Nombre_Comunidad',
     'UI_ID_Inicial']
-=======
-    'Meta_Hito']
->>>>>>> 1de0162e9ad4e7a9df62aadbca46c2194b3914e9
 
     df_columnas_estandarizacion = ['codigo',
     'ID_UI']
