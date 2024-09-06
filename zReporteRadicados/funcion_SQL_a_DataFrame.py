@@ -32,6 +32,7 @@ def sql_a_dataframe(consulta_usuario: str):
                 # Establecer el esquema en la conexión
                 conexion_sqlalq.execute(text(f'SET search_path TO {schema}'))
 
+<<<<<<< HEAD
                 # Ejecutar la consulta y crear el DataFrame
                 consulta_sql = pd.read_sql_query(consulta_usuario, conexion_sqlalq)
 
@@ -49,6 +50,19 @@ def sql_a_dataframe(consulta_usuario: str):
                     raise  # Relanza el error si ya no hay más reintentos
             else:
                 raise  # Relanza si es otro tipo de error
+=======
+        print("Conexión exitosa ...")
+        
+        # Cierre de la conexión
+        conexion_sqlalq.close()
+
+        # ? Se construye el dataframe a partir de la lectura de la consulta (usando la función read_sql_query)
+        return pd.DataFrame(consulta_sql) 
+
+    except Exception as e:
+        print(f"Error durante la conexión o ejecución de la consulta: {e}")
+        consulta_sql = None
+>>>>>>> 1de0162e9ad4e7a9df62aadbca46c2194b3914e9
 
         except Exception as e:
             print(f"Error durante la conexión o ejecución de la consulta: {e}")

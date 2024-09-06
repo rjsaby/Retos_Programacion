@@ -6,6 +6,10 @@ os.environ["CRYPTOGRAPHY_OPENSSL_NO_LEGACY"] = "yes"
 
 arcpy.env.overwriteOutput = True
 
+os.environ["CRYPTOGRAPHY_OPENSSL_NO_LEGACY"] = "yes"
+
+arcpy.env.overwriteOutput = True
+
 def dataframe_terrenos():
 
     try:
@@ -16,6 +20,7 @@ def dataframe_terrenos():
 
         NOMBRE_FC_TERRENOS_UNIFICADOS = 'Analitica_UT_Consolidada\\TERRENO_UNIFICADO'
 
+<<<<<<< HEAD
         # TODO *************  Unificación Registros GIS ***************
 
         RUTA_BD_CONSOLIDADA_NUBE = r"D:\OneDrive\Documentos\docsProyectos\5.RAISS\2024.0.RAISS_Lote_4\6.Hitos\E1_Alistamiento_Diagnostico\3_Disposicion\1.BD_Consolidada\BD_Consolidada_Lote4.gdb\Consolidacion_ES\_con_r_lc_terreno"
@@ -31,6 +36,17 @@ def dataframe_terrenos():
         CAPA_TERRENOS_W_GIS_BCGS = 'TERRENO_UNIFICADO_GIS_BCGS'
         ruta_fc_terrenos_w_gis_bcgs = os.path.join(BD_CONSOLIDADA_LOCAL,CAPA_TERRENOS_W_GIS_BCGS)
 
+=======
+        # ! *************  Unificación Registros GIS ***************
+
+        RUTA_BD_CONSOLIDADA_NUBE = r"C:\Users\rodian.saby\OneDrive\Documentos\docsProyectos\5.RAISS\2024.0.RAISS_Lote_4\6.Hitos\E1_Alistamiento_Diagnostico\3_Disposicion\1.BD_Consolidada\BD_Consolidada_Lote4.gdb\Consolidacion_ES\_con_r_lc_terreno"
+        RUTA_TERRENOS_GC = r"C:\docsProyectos\5.RAISS\2024.0.RAISS_Lote_4\6.Hitos\E1_Alistamiento_Diagnostico\3_Disposicion\1.BD_Consolidada\BD_Consolidada_Lote4.gdb\Analitica_UT_Consolidada\TERRENO_UNIFICADO"
+
+        BD_CONSOLIDADA_LOCAL = r"C:\docsProyectos\5.RAISS\2024.0.RAISS_Lote_4\6.Hitos\E1_Alistamiento_Diagnostico\3_Disposicion\1.BD_Consolidada\BD_Consolidada_Lote4.gdb\Analitica_UT_Consolidada"
+        CAPA_TERRENOS_W_GIS = 'TERRENO_UNIFICADO_w_GIS'
+        ruta_fc_terrenos_w_gis = os.path.join(BD_CONSOLIDADA_LOCAL,CAPA_TERRENOS_W_GIS)
+
+>>>>>>> 1de0162e9ad4e7a9df62aadbca46c2194b3914e9
         columna_creacion_terrenos_gis = {'codigo_anterior':None}
 
         columnas_seleccion_terrenos_gis = ['terreno_codigo',
@@ -76,7 +92,11 @@ def dataframe_terrenos():
         
         columna_renombre_no_editado = {'SHAPE_x':'SHAPE'}
         
+<<<<<<< HEAD
         # TODO *************  Unificación Registros GIS ***************
+=======
+        # ! *************  Unificación Registros GIS ***************
+>>>>>>> 1de0162e9ad4e7a9df62aadbca46c2194b3914e9
 
         capa_terrenos_rurales = os.path.join(RUTA_BD_CONSOLIDADA, CAPA_TERRENOS_R)
         capa_terrenos_urbanos = os.path.join(RUTA_BD_CONSOLIDADA, CAPA_TERRENOS_U)
@@ -107,7 +127,11 @@ def dataframe_terrenos():
 
         print(f"De la capa original de Terrenos con {df_terrenos_unificados.shape[0]} registros se elimanan repetidos, obteniendose {df_terrenos_no_repetidos.shape[0]}")
         
+<<<<<<< HEAD
         # TODO *************  Unificación Registros GIS ***************
+=======
+        # ! *************  Unificación Registros GIS ***************
+>>>>>>> 1de0162e9ad4e7a9df62aadbca46c2194b3914e9
 
         df_terrenos_gis = pd.DataFrame.spatial.from_featureclass(RUTA_BD_CONSOLIDADA_NUBE)
         df_terrenos_gc = pd.DataFrame.spatial.from_featureclass(RUTA_TERRENOS_GC)
@@ -149,6 +173,7 @@ def dataframe_terrenos():
 
         df_terrenos_unificado_gis = pd.DataFrame.spatial.from_featureclass(ruta_fc_terrenos_w_gis)
 
+<<<<<<< HEAD
         # TODO: ************** Terrenos alineados con la Labor del Flujo BCGS ****************
 
         # TODO: Se llama al DF de los Terrenos Digitalizados
@@ -237,6 +262,11 @@ def dataframe_terrenos():
 
         # TODO *************  Unificación Registros GIS ***************
         return df_concatenacion_gis_bcgs, ruta_fc_terrenos_w_gis_bcgs
+=======
+        # ! *************  Unificación Registros GIS ***************
+
+        return df_terrenos_unificado_gis, ruta_fc_terrenos_w_gis
+>>>>>>> 1de0162e9ad4e7a9df62aadbca46c2194b3914e9
         
     except Exception as e:
         print(f"Error generado durante la ejecución de la función: {e}")

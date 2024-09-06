@@ -4,4 +4,6 @@ debug.log
 *.zip
 *.bmp
 *.csv
+*.pyc
+Pruebas/
 
